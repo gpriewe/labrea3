@@ -24,7 +24,6 @@ rows = mycursor.fetchall()
 
 i = 0
 pkt = Ether()/IP()/TCP()/Raw()
-#print(type(pkt[Raw].load))
 while i < rows[0][0]:
   sql = "SELECT * FROM packets LIMIT {0},10000".format(i)
   mycursor.execute(sql)
@@ -99,6 +98,6 @@ while i < rows[0][0]:
         tcpoptionslist.append(tcpoptions)
     pkt[TCP].options = tcpoptionslist
     if row[28]:
-      pkt[Raw].load = bytes(row[28])
+      pkt[Raw].load = bytes(row[28].strip("b'"), 'utf-8')
     wrpcap("temp.pcap",pkt,append=True)
   i += 10000
