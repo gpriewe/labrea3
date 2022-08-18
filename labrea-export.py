@@ -27,7 +27,14 @@ pkt = Ether()/IP()/TCP()/Raw()
 while i < rows[0][0]:
   sql = "SELECT * FROM packets LIMIT {0},10000".format(i)
   mycursor.execute(sql)
-  myresult = mycursor.fetchall()
+
+  while True:
+    try:
+      myresult = mycursor.fetchall()
+    except mysql.connector.errors.InterfaceError as err:
+      print("Error: {}".format(err))
+      continue
+    break
   for row in myresult:
     #pkt[timestamp] = row[0]
     pkt[Ether].dst = row[1]
@@ -99,5 +106,5 @@ while i < rows[0][0]:
     pkt[TCP].options = tcpoptionslist
     if row[28]:
       pkt[Raw].load = bytes(row[28].strip("b'"), 'utf-8')
-    wrpcap("temp.pcap",pkt,append=True)
+    wrpcap("labrea.pcap",pkt,append=True)
   i += 10000
