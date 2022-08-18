@@ -26,10 +26,10 @@ i = 0
 pkt = Ether()/IP()/TCP()/Raw()
 while i < rows[0][0]:
   sql = "SELECT * FROM packets LIMIT {0},10000".format(i)
-  mycursor.execute(sql)
 
   while True:
     try:
+      mycursor.execute(sql)
       myresult = mycursor.fetchall()
     except mysql.connector.errors.InterfaceError as err:
       print("Error: {}".format(err))
