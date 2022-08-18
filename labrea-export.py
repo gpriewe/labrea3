@@ -31,7 +31,7 @@ while i < rows[0][0]:
     try:
       mycursor.execute(sql)
       myresult = mycursor.fetchall()
-    except mysql.connector.errors.InterfaceError as err:
+    except mysql.connector.errors as err:
       print("Error: {}".format(err))
       continue
     break
