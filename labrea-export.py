@@ -32,6 +32,7 @@ while i < rows[0][0]:
       myresult = mycursor.fetchall()
     except mysql.connector.Error as err:
       print("Error: {}".format(err))
+      time.sleep(60)
       mydb = mysql.connector.connect(
       host=dbini["host"],
       user=dbini["user"],
