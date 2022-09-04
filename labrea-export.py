@@ -26,13 +26,18 @@ i = 0
 pkt = Ether()/IP()/TCP()/Raw()
 while i < rows[0][0]:
   sql = "SELECT * FROM packets LIMIT {0},10000".format(i)
-
   while True:
     try:
       mycursor.execute(sql)
       myresult = mycursor.fetchall()
     except mysql.connector.Error as err:
       print("Error: {}".format(err))
+      mydb = mysql.connector.connect(
+      host=dbini["host"],
+      user=dbini["user"],
+      password=dbini["password"],
+      database=dbini["database"])
+      mycursor = mydb.cursor()
       continue
     break
   for row in myresult:
