@@ -28,6 +28,7 @@ while i < rows[0][0]:
   sql = "SELECT * FROM packets LIMIT {0},10000".format(i)
   while True:
     try:
+      print('Exporting rows ' + str(i) + ' through ' + str(i + 9999) + ' of ' + str(rows[0][0]))
       mycursor.execute(sql)
       myresult = mycursor.fetchall()
     except mysql.connector.Error as err:
